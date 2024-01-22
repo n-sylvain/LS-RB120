@@ -1,16 +1,35 @@
 class Animal
-  def speak
-    "Hello!"
+  attr_accessor :name
+
+  def initialize(name)
+    @name = name
   end
 end
 
 class GoodDog < Animal
+  def initialize(color)
+    super
+    @color = color
+  end
 end
 
-class Cat < Animal
+class BadDog < Animal
+  def initialize(age, name)
+    super(name)
+    @age = age
+  end
 end
 
-sparky = GoodDog.new
-paws = Cat.new
-puts sparky.speak
-puts paws.speak
+class Bear < Animal
+  def initialize(color)
+    super()
+    @color = color
+  end
+end
+
+# bruno = GoodDog.new("brown")
+
+# p bruno
+
+p BadDog.new(2, "bear")
+p bear = Bear.new("black")
