@@ -1,3 +1,6 @@
+Create a class 'Student' with attributes name and grade. Do NOT make the grade getter public, so joe.grade will raise an error. Create a better_grade_than? method, that you can call like so...
+
+```ruby
 class Student
   def initialize(name, grade)
     @name = name
@@ -21,3 +24,6 @@ bob = Student.new('Bob', 78)
 puts joe.better_grade_than?(bob)
 puts bob.better_grade_than?(joe)
 puts joe.grade
+
+
+```
