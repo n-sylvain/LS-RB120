@@ -1,23 +1,22 @@
-class Student
-  def initialize(name, grade)
-    @name = name
-    @grade = grade
+class Box
+  def initialize(w, h)
+    @width = w
+    @height = h
   end
 
-  def better_grade_than?(other_student)
-    grade > other_student.grade
+  def printWidth
+    @width
   end
 
-  protected
-
-  def grade
-    @grade
+  def printHeight
+    @height
   end
 end
 
-joe = Student.new('Joe', 93)
-bob = Student.new('Bob', 78)
+box = Box.new(10, 20)
 
-puts joe.better_grade_than?(bob)
-puts bob.better_grade_than?(joe)
-puts joe.grade
+x = box.printWidth
+y = box.printHeight
+
+puts x
+puts y
