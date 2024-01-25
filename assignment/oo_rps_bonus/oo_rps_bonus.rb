@@ -209,10 +209,8 @@ class RPSGame
   end
 
   def display_score
-    # p human_move_history
-    # p computer_move_history
     half_width = (WINDOW_WIDTH - 5) / 2
-    frame = "+#{'-' * (WINDOW_WIDTH - 2)}+" #45
+    frame = "+#{'-' * (WINDOW_WIDTH - 2)}+"
     left_str = "#{human.name.slice(0, half_width - 5).upcase} [#{human_score}"
     right_str = "#{computer_score}] #{computer.name.slice(0, half_width - 5).upcase}"
     left_str = "|#{left_str.rjust(half_width - 1)}"
