@@ -1,0 +1,16 @@
+welcome: 'Welcome to the Rock, Paper, Scissors, Lizard, Spock game!'
+rules: 'First to win 3 times wins the game!'
+player_choice_request: 'Please make your choice by entering the full value of its diminutive'
+player_choice_try_again: 'I did not understand your choice.'
+player_choice_selection: 'You chose: '
+player_choice_validation: 'Do you validate? (y/n)'
+computer_choice_selection: 'Computer chose: '
+player_name: 'PLAYER - '
+computer_name: ' - COMPUTER'
+round: 'ROUND '
+player_win: 'You WIN the game!'
+computer_win: "You lost the game! It's okay, it's just a game."
+end_game: 'Thank you for playing! Have a good day!'
+game_tie: "It's a tie!"
+game_player_win: 'You WIN this round!'
+game_computer_win: 'You LOSE this round!'
