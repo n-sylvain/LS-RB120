@@ -64,7 +64,7 @@ class Move
 end
 
 class Player
-  attr_accessor :move, :name
+  attr_accessor :move, :name, :choice
 
   include Printable
 
@@ -85,21 +85,25 @@ class Human < Player
     self.name = n
   end
 
+  def selection_check
+    if Move::VALUES.key?(choice) ||
+       Move::VALUES.any? { |_, abbrv| abbrv[:abbreviation] == choice }
+      if Move::VALUES.any? { |_, abbrv| abbrv[:abbreviation] == choice }
+        self.choice = Move::VALUES.find { |_, v| v[:abbreviation] == choice }[0]
+      end
+      return true
+    end
+    false
+  end
+
   def choose
-    choice = nil
+    self.choice = nil
     loop do
       display_select_move_message
-      choice = gets.chomp.downcase.to_sym
+      self.choice = gets.chomp.downcase.to_sym
+      break if selection_check
 
-      if Move::VALUES.key?(choice) ||
-         Move::VALUES.any? { |_, diminutive| diminutive[:abbreviation] == choice }
-        if Move::VALUES.any? { |_, diminutive| diminutive[:abbreviation] == choice }
-          choice = Move::VALUES.find { |_, value| value[:abbreviation] == choice }[0]
-        end
-        break
-      else
-        prompt "Please try again"
-      end
+      prompt "Please try again"
     end
     self.move = Move.new(choice)
   end
@@ -227,16 +231,7 @@ class RPSGame
     puts frame
   end
 
-  def play_again?
-    answer = nil
-    loop do
-      prompt "Would you like to play again? (y/n)"
-      answer = gets.chomp
-      break if ['y', 'n'].include? answer[0].downcase
-      prompt "Sorry, please input yes or no."
-    end
-
-    return false if answer.downcase == 'n'
+  def reset_board
     self.human_score = 0
     self.computer_score = 0
     self.human_move_history = []
@@ -244,26 +239,45 @@ class RPSGame
     @computer.opponent_game_history(@human_move_history)
     @computer.computer_game_history(@computer_move_history)
     self.winner = nil
+  end
+
+  def play_again?
+    answer = ""
+    loop do
+      prompt "Would you like to play again? (y/n)"
+      answer = gets.chomp
+      # binding.pry
+      break if (!answer.nil?) || (['y', 'n'].include? answer[0].downcase)
+      prompt "Sorry, please input yes or no."
+    end
+
+    return false if answer.downcase == 'n'
+    reset_board
     return true if answer == 'y'
+  end
+
+  def main_game_play
+    system 'clear'
+    display_score
+    human.choose
+    computer.choose
+    system 'clear'
+    update_score
+    update_winner
+    display_score
+    display_moves
+    display_winner
   end
 
   def play
     loop do
       loop do
-        system 'clear'
-        display_score
-        human.choose
-        computer.choose
-        system 'clear'
-        update_score
-        update_winner
-        display_score
-        display_moves
-        display_winner
-        press_key_to_continue if winner.nil?
+        main_game_play
         break unless winner.nil?
+        press_key_to_continue
       end
       break unless play_again?
+      @computer = Computer.new
     end
     display_goodbye_message
   end
