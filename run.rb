@@ -1,22 +1,30 @@
-class Box
-  def initialize(w, h)
-    @width = w
-    @height = h
-  end
+module Describable
+  # SIDES = nil
 
-  def printWidth
-    @width
-  end
-
-  def printHeight
-    @height
+  def describe_shape
+    # "I am a #{self.class} and have #{SIDES} sides."
+    "I am a #{self.class} and have #{self.class::SIDES} sides."
   end
 end
 
-box = Box.new(10, 20)
+class Shape
+  include Describable
 
-x = box.printWidth
-y = box.printHeight
+  def self.sides
+    self::SIDES
+  end
+end
 
-puts x
-puts y
+class Quadrilateral < Shape
+  SIDES = 4
+
+  def sides
+    SIDES
+  end
+end
+
+class Square < Quadrilateral; end
+
+p Square.sides # => 4
+p Square.new.sides # => 4
+p Square.new.describe_shape # => "I am a Square and have 4 sides."
