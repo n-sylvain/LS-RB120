@@ -1,30 +1,13 @@
-module Describable
-  # SIDES = nil
+class Light
+  attr_accessor :brightness, :color
 
-  def describe_shape
-    # "I am a #{self.class} and have #{SIDES} sides."
-    "I am a #{self.class} and have #{self.class::SIDES} sides."
+  def initialize(brightness, color)
+    @brightness = brightness
+    @color = color
   end
-end
 
-class Shape
-  include Describable
-
-  def self.sides
-    self::SIDES
+  def status
+    "I have a brightness level of #{brightness} and a color of #{color}"
   end
+
 end
-
-class Quadrilateral < Shape
-  SIDES = 4
-
-  def sides
-    SIDES
-  end
-end
-
-class Square < Quadrilateral; end
-
-p Square.sides # => 4
-p Square.new.sides # => 4
-p Square.new.describe_shape # => "I am a Square and have 4 sides."
