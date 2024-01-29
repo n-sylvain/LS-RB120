@@ -1,10 +1,23 @@
 class Board
+  INITIAL_MARKER = " "
+
   def initialize
+    @squares = {}
+    (1..9).each { |key| @squares[key] = Square.new(INITIAL_MARKER)}
+  end
+
+  def get_square_at(key)
+    @squares[key]
   end
 end
 
 class Square
-  def initialize
+  def initialize(marker)
+    @marker = marker
+  end
+
+  def to_s
+    @marker
   end
 end
 
@@ -13,10 +26,17 @@ class Player
   end
 
   def mark
+
   end
 end
 
 class TTTGame
+  attr_reader :board
+
+  def initialize
+    @board = Board.new
+  end
+
   def display_welcome_message
     puts "Welcome to Tic Tac Toe!"
     puts ""
@@ -29,18 +49,15 @@ class TTTGame
   def display_board
     puts ""
     puts "     |     |"
-    puts "     |     |"
-    # puts "  #{brd[1]}  |  #{brd[2]}  |  #{brd[3]}"
-    puts "     |     |"
-    puts "-----+-----+-----"
-    puts "     |     |"
-    puts "     |     |"
-    # puts "  #{brd[4]}  |  #{brd[5]}  |  #{brd[6]}"
+    puts "  #{board.get_square_at(1)}  |  #{board.get_square_at(2)}  |  #{board.get_square_at(3)}"
     puts "     |     |"
     puts "-----+-----+-----"
     puts "     |     |"
+    puts "  #{board.get_square_at(4)}  |  #{board.get_square_at(5)}  |  #{board.get_square_at(6)}"
     puts "     |     |"
-    # puts "  #{brd[7]}  |  #{brd[8]}  |  #{brd[9]}"
+    puts "-----+-----+-----"
+    puts "     |     |"
+    puts "  #{board.get_square_at(7)}  |  #{board.get_square_at(8)}  |  #{board.get_square_at(9)}"
     puts "     |     |"
     puts ""
   end
