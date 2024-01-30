@@ -172,7 +172,7 @@ class Computer
 end
 
 class TTTGame
-  MAX_SCORE = 2
+  MAX_SCORE = 5
 
   attr_reader :board, :human, :computer
 
