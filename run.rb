@@ -1,69 +1,64 @@
-module Moveable
-  attr_accessor :speed, :heading
-  attr_writer :fuel_capacity, :fuel_efficiency
+class FixedArray
+  def initialize(lmax_size)
+    @array = Array.new(max_size)
+  end
 
-  def range
-    @fuel_capacity * @fuel_efficiency
+  def [](index)
+    @array.fetch[index]
+  end
+
+  def to_a
+    @array.to_a
+  end
+
+  def []=(index, value)
+    self[index]
+    @array[index] = value
   end
 end
 
-class WheeledVehicle
-  include Moveable
 
-  def initialize(tire_array, km_traveled_per_liter, liters_of_fuel_capacity)
-    @tires = tire_array
-    self.fuel_efficiency = km_traveled_per_liter
-    self.fuel_capacity = liters_of_fuel_capacity
-  end
+fixed_array = FixedArray.new(5)
+puts fixed_array[3] == nil
+puts fixed_array.to_a == [nil] * 5
 
-  def tire_pressure(tire_index)
-    @tires[tire_index]
-  end
+# fixed_array[3] = 'a'
+# puts fixed_array[3] == 'a'
+# puts fixed_array.to_a == [nil, nil, nil, 'a', nil]
 
-  def inflate_tire(tire_index, pressure)
-    @tires[tire_index] = pressure
-  end
-end
+# fixed_array[1] = 'b'
+# puts fixed_array[1] == 'b'
+# puts fixed_array.to_a == [nil, 'b', nil, 'a', nil]
 
-class Auto < WheeledVehicle
-  def initialize
-    # 4 tires are various tire pressures
-    super([30,30,32,32], 50, 25.0)
-  end
-end
+# fixed_array[1] = 'c'
+# puts fixed_array[1] == 'c'
+# puts fixed_array.to_a == [nil, 'c', nil, 'a', nil]
 
-class Motorcycle < WheeledVehicle
-  def initialize
-    # 2 tires are various tire pressures
-    super([20,20], 80, 8.0)
-  end
-end
+# fixed_array[4] = 'd'
+# puts fixed_array[4] == 'd'
+# puts fixed_array.to_a == [nil, 'c', nil, 'a', 'd']
+# puts fixed_array.to_s == '[nil, "c", nil, "a", "d"]'
 
-class Seacraft
-  include Moveable
+# puts fixed_array[-1] == 'd'
+# puts fixed_array[-4] == 'c'
 
-  attr_reader :hull_count, :propeller_count
+# begin
+#   fixed_array[6]
+#   puts false
+# rescue IndexError
+#   puts true
+# end
 
-  def initialize(num_propellers, num_hulls, fuel_efficiency, fuel_capacity)
-    @propeller_count = num_propellers
-    @hull_count = num_hulls
-    self.fuel_efficiency = fuel_efficiency
-    self.fuel_capacity = fuel_capacity
-  end
+# begin
+#   fixed_array[-7] = 3
+#   puts false
+# rescue IndexError
+#   puts true
+# end
 
-  def range
-    super + 10
-  end
-end
-
-class Motorboat < Seacraft
-  def initialize(km_traveled_per_liter, liters_of_fuel_capacity)
-    super(1, 1, km_traveled_per_liter, liters_of_fuel_capacity)
-  end
-end
-
-class Catamaran < Seacraft
-  def initialize(num_propellers, num_hulls, km_traveled_per_liter, liters_of_fuel_capacity)
-    super
-  end
-end
+# begin
+#   fixed_array[7] = 3
+#   puts false
+# rescue IndexError
+#   puts true
+# end
